@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Humanity Foundation — Technology for Humanity</title>
+    <meta name="description" content="Applied Humanity Foundation is a nonprofit research and technology organization dedicated to advancing human well-being through responsible AI application, open-source tools, and digital literacy education.">
+    <meta name="keywords" content="nonprofit, open source, AI, digital literacy, education, technology, humanity">
+    <meta property="og:title" content="Applied Humanity Foundation">
+    <meta property="og:description" content="Advancing human well-being through responsible technology application and open-source education.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://appliedhumanityfoundation.org">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #060a10;
+            --surface: #0d1420;
+            --surface-2: #131e30;
+            --border: rgba(255,255,255,0.06);
+            --text: #e2e6ee;
+            --text-muted: #7b8ba5;
+            --accent: #0ea5e9;
+            --accent-2: #38bdf8;
+            --accent-3: #2563eb;
+            --highlight: #06d6a0;
+            --warm: #f59e0b;
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        #particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ---- Navigation ---- */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .nav.scrolled {
+            background: rgba(6,10,16,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 var(--border);
+        }
+        .nav-logo {
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-logo .logo-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-3), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+        .nav-logo span {
+            background: linear-gradient(135deg, var(--accent-2), var(--highlight));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent-3), var(--accent));
+            color: white !important;
+            padding: 8px 20px;
+            border-radius: 999px;
+            font-weight: 600 !important;
+            transition: opacity 0.2s, transform 0.2s !important;
+        }
+        .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        /* ---- Sections ---- */
+        section { position: relative; z-index: 1; }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 100px 24px;
+        }
+
+        /* ---- Hero ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(14,165,233,0.1);
+            border: 1px solid rgba(14,165,233,0.25);
+            color: var(--accent-2);
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease;
+            letter-spacing: 0.02em;
+        }
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: var(--highlight);
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 6.5vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.08;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s 0.1s ease both;
+        }
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent-2) 0%, var(--highlight) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+            color: var(--text-muted);
+            max-width: 640px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.6s 0.2s ease both;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s 0.3s ease both;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 30px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-3), var(--accent));
+            color: white;
+            box-shadow: 0 4px 24px rgba(14,165,233,0.3);
+        }
+        .btn-primary:hover { box-shadow: 0 6px 32px rgba(14,165,233,0.45); }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---- Section Headers ---- */
+        .section-label {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        /* ---- Stats ---- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 48px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .stat-card:hover {
+            border-color: rgba(14,165,233,0.3);
+            transform: translateY(-4px);
+        }
+        .stat-number {
+            font-size: 2.6rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--accent-2), var(--highlight));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .stat-label { color: var(--text-muted); font-size: 0.9rem; margin-top: 4px; }
+
+        /* ---- Mission Cards ---- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 48px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover {
+            border-color: rgba(14,165,233,0.2);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        .card-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        .card-icon.blue { background: rgba(14,165,233,0.12); }
+        .card-icon.green { background: rgba(6,214,160,0.12); }
+        .card-icon.amber { background: rgba(245,158,11,0.12); }
+        .card-icon.indigo { background: rgba(37,99,235,0.12); }
+        .card h3 { font-size: 1.15rem; margin-bottom: 8px; letter-spacing: -0.3px; }
+        .card p { color: var(--text-muted); font-size: 0.93rem; line-height: 1.65; }
+
+        /* ---- Projects ---- */
+        .project-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 32px;
+            margin-bottom: 14px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .project-item:hover {
+            border-color: rgba(14,165,233,0.2);
+            transform: translateX(4px);
+        }
+        .project-item h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .project-item h3 a { color: var(--text); text-decoration: none; }
+        .project-item h3 a:hover { color: var(--accent-2); }
+        .project-item p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 10px; }
+        .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag {
+            font-size: 0.76rem;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-weight: 500;
+        }
+        .tag.blue { background: rgba(14,165,233,0.1); color: var(--accent-2); }
+        .tag.green { background: rgba(6,214,160,0.1); color: var(--highlight); }
+        .tag.amber { background: rgba(245,158,11,0.1); color: var(--warm); }
+        .tag.indigo { background: rgba(37,99,235,0.1); color: #818cf8; }
+        .project-arrow {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            transition: color 0.3s, transform 0.3s;
+        }
+        .project-item:hover .project-arrow {
+            color: var(--accent-2);
+            transform: translateX(4px);
+        }
+
+        /* ---- Team ---- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .team-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            text-align: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .team-card:hover {
+            border-color: rgba(14,165,233,0.2);
+            transform: translateY(-4px);
+        }
+        .team-avatar {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        .team-avatar.av1 { background: linear-gradient(135deg, var(--accent-3), var(--accent)); }
+        .team-avatar.av2 { background: linear-gradient(135deg, #0ea5e9, #06d6a0); }
+        .team-avatar.av3 { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+        .team-avatar.av4 { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+        .team-avatar.av5 { background: linear-gradient(135deg, #14b8a6, #3b82f6); }
+        .team-avatar.av6 { background: linear-gradient(135deg, #f43f5e, #f59e0b); }
+        .team-card h3 { font-size: 1.15rem; margin-bottom: 4px; }
+        .team-role { color: var(--accent-2); font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; }
+        .team-card .bio { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+
+        /* ---- Transparency ---- */
+        .transparency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 48px;
+        }
+        .transparency-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+        .transparency-card h4 {
+            font-size: 0.95rem;
+            margin-bottom: 16px;
+            color: var(--accent-2);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.82rem;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-row .label { color: var(--text-muted); }
+        .info-row .value { color: var(--text); font-weight: 500; text-align: right; }
+
+        /* ---- Contact ---- */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 48px;
+        }
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: border-color 0.3s;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .contact-card:hover { border-color: rgba(14,165,233,0.3); }
+        .contact-icon {
+            font-size: 1.4rem;
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .contact-icon.c-email { background: rgba(14,165,233,0.12); }
+        .contact-icon.c-github { background: rgba(6,214,160,0.12); }
+        .contact-icon.c-address { background: rgba(245,158,11,0.12); }
+        .contact-card h4 { font-size: 0.95rem; margin-bottom: 4px; }
+        .contact-card span { color: var(--text-muted); font-size: 0.85rem; word-break: break-all; }
+
+        /* ---- Footer ---- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 48px 24px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            position: relative;
+            z-index: 1;
+        }
+        footer .footer-brand {
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        footer .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        footer .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.82rem;
+            transition: color 0.2s;
+        }
+        footer .footer-links a:hover { color: var(--accent-2); }
+
+        /* ---- Divider ---- */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 0 auto;
+            max-width: 1100px;
+        }
+
+        /* ---- Reveal Animations ---- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            .nav { padding: 12px 20px; }
+            .nav-links { display: none; }
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 56px;
+                left: 0; right: 0;
+                background: rgba(6,10,16,0.96);
+                backdrop-filter: blur(20px);
+                padding: 24px;
+                gap: 16px;
+                border-bottom: 1px solid var(--border);
+            }
+            .mobile-toggle { display: block; }
+            .hero h1 { font-size: 2.2rem; letter-spacing: -1px; }
+            .container { padding: 64px 20px; }
+            .project-item { grid-template-columns: 1fr; }
+            .project-arrow { display: none; }
+            .info-row { flex-direction: column; gap: 2px; }
+            .info-row .value { text-align: left; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .hero-actions { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<nav class="nav" id="nav">
+    <div class="nav-logo">
+        <div class="logo-icon">AH</div>
+        <span>Applied Humanity</span>
+    </div>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">&#9776;</button>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#transparency">Transparency</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="hero">
+    <div>
+        <div class="hero-badge"><span class="dot"></span> Nonprofit &middot; Open Source &middot; Public Benefit</div>
+        <h1>Technology<br><span class="gradient">for Humanity</span></h1>
+        <p>Applied Humanity Foundation is a nonprofit research and technology organization advancing human well-being through responsible AI application, open-source tools, and digital literacy education.</p>
+        <div class="hero-actions">
+            <a href="https://github.com/applied-humanity-foundation" class="btn btn-primary" target="_blank" rel="noopener">&#8599; Explore on GitHub</a>
+            <a href="#mission" class="btn btn-secondary">Our Mission &darr;</a>
+        </div>
+    </div>
+</section>
+
+<section id="mission">
+    <div class="container">
+        <div class="section-label reveal">What We Stand For</div>
+        <h2 class="section-title reveal">Our Mission</h2>
+        <p class="section-subtitle reveal">We develop public-interest software, educational initiatives, and open technological resources to ensure that advanced technologies are applied safely, ethically, and broadly for the benefit of humanity.</p>
+
+        <div class="stats-grid reveal">
+            <div class="stat-card">
+                <div class="stat-number" data-count="2026" data-raw="true">2026</div>
+                <div class="stat-label">Established</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="100" data-suffix="%">0</div>
+                <div class="stat-label">Open Source</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="2">0</div>
+                <div class="stat-label">Languages</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" data-count="4">0</div>
+                <div class="stat-label">Focus Areas</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="programs">
+    <div class="container">
+        <div class="section-label reveal">What We Do</div>
+        <h2 class="section-title reveal">Programs</h2>
+        <p class="section-subtitle reveal">Focused initiatives that bridge the gap between advanced technology and the people it should serve.</p>
+
+        <div class="cards-grid reveal">
+            <div class="card">
+                <div class="card-icon blue">&#128187;</div>
+                <h3>Open-Source Tools</h3>
+                <p>Building public-interest software and developer tools that are freely available. We focus on application-layer innovation using existing AI systems and APIs — not competing with model providers, but making their capabilities accessible to everyone.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon green">&#127891;</div>
+                <h3>Digital Literacy Education</h3>
+                <p>Creating multilingual educational resources that help individuals, educators, and small businesses effectively leverage modern technology. From beginner guides to advanced workflows, we meet learners where they are.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon amber">&#128300;</div>
+                <h3>Responsible AI Research</h3>
+                <p>Researching human-centered approaches to AI application, focusing on accessibility, safety, and ethical deployment. We publish our findings openly to benefit the broader technology community.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon indigo">&#127760;</div>
+                <h3>Community & Workshops</h3>
+                <p>Hosting online workshops and community events that connect technology practitioners with learners. Building a global network of people committed to using technology for positive social impact.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="projects">
+    <div class="container">
+        <div class="section-label reveal">What We Build</div>
+        <h2 class="section-title reveal">Open Source Projects</h2>
+        <p class="section-subtitle reveal">All our work is open source. We believe transparency and collaboration produce better technology for everyone.</p>
+
+        <div class="reveal" style="margin-top:48px;">
+            <div class="project-item">
+                <div>
+                    <h3><a href="https://github.com/applied-humanity-foundation">Digital Literacy Toolkit</a></h3>
+                    <p>A comprehensive collection of beginner-friendly guides, templates, and interactive tools for practical technology skills — from productivity workflows to AI-assisted content creation.</p>
+                    <div class="project-tags">
+                        <span class="tag blue">Education</span>
+                        <span class="tag green">CC BY 4.0</span>
+                        <span class="tag amber">Multilingual</span>
+                    </div>
+                </div>
+                <span class="project-arrow">&rarr;</span>
+            </div>
+            <div class="project-item">
+                <div>
+                    <h3><a href="https://github.com/applied-humanity-foundation">AI Application Framework</a></h3>
+                    <p>Open-source tools and libraries that simplify responsible integration of publicly available AI systems into educational and nonprofit applications.</p>
+                    <div class="project-tags">
+                        <span class="tag blue">Python</span>
+                        <span class="tag indigo">TypeScript</span>
+                        <span class="tag green">MIT</span>
+                    </div>
+                </div>
+                <span class="project-arrow">&rarr;</span>
+            </div>
+            <div class="project-item">
+                <div>
+                    <h3><a href="https://github.com/applied-humanity-foundation">Community Translation Hub</a></h3>
+                    <p>A collaborative platform for translating technology education materials into multiple languages, starting with English and Chinese.</p>
+                    <div class="project-tags">
+                        <span class="tag amber">i18n</span>
+                        <span class="tag green">CC BY 4.0</span>
+                        <span class="tag blue">Community</span>
+                    </div>
+                </div>
+                <span class="project-arrow">&rarr;</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="team">
+    <div class="container">
+        <div class="section-label reveal">Who We Are</div>
+        <h2 class="section-title reveal">Leadership</h2>
+        <p class="section-subtitle reveal">Our team brings deep experience in software engineering, creative technology, and education.</p>
+
+        <div class="team-grid reveal">
+            <div class="team-card">
+                <div class="team-avatar av1">JP</div>
+                <h3>Jie Peng</h3>
+                <p class="team-role">Founder & President</p>
+                <p class="bio">Software engineer with 5+ years of experience in tool development, pipeline engineering, and creative technology. Former Technical Artist at a major international gaming studio, building real-time LiveLink pipelines with Unreal Engine and collaborating with NVIDIA on Omniverse platform integration. B.S. in Computer Application Technology.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar av2">EM</div>
+                <h3>Elena Marchetti</h3>
+                <p class="team-role">Director of Education</p>
+                <p class="bio">Education technology specialist with a background in curriculum design and digital pedagogy. Previously led online learning initiatives at an EdTech startup in Berlin. Passionate about making technology education accessible across languages and cultures.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar av3">DR</div>
+                <h3>David Reeves</h3>
+                <p class="team-role">Director of Technology</p>
+                <p class="bio">Full-stack developer and open-source contributor with experience in AI application development and cloud infrastructure. Previously at a Bay Area SaaS company building developer tools. Advocates for ethical AI deployment and public-interest software.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar av4">SK</div>
+                <h3>Sarah Kim</h3>
+                <p class="team-role">Director of Operations</p>
+                <p class="bio">Nonprofit operations and compliance professional with experience managing 501(c)(3) organizations. Background in grant writing, financial reporting, and organizational governance. Ensures the foundation operates with full transparency and accountability.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar av5">MA</div>
+                <h3>Marcus Andersen</h3>
+                <p class="team-role">Director of Research</p>
+                <p class="bio">AI researcher with a focus on human-computer interaction and responsible deployment of machine learning systems. Former research engineer at a Nordic AI lab. Leads the foundation's research initiatives on accessibility and ethical technology design.</p>
+            </div>
+            <div class="team-card">
+                <div class="team-avatar av6">LP</div>
+                <h3>Lucia Pereira</h3>
+                <p class="team-role">Director of Community</p>
+                <p class="bio">Community strategist and multilingual content creator with experience building global developer communities. Previously managed open-source outreach programs at a major cloud platform. Drives the foundation's workshops and translation initiatives.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="transparency">
+    <div class="container">
+        <div class="section-label reveal">Accountability</div>
+        <h2 class="section-title reveal">Transparency</h2>
+        <p class="section-subtitle reveal">We believe nonprofits should operate with full transparency. Here is our organizational information.</p>
+
+        <div class="transparency-grid reveal">
+            <div class="transparency-card">
+                <h4>Organization Details</h4>
+                <div class="info-row">
+                    <span class="label">Legal Name</span>
+                    <span class="value">Applied Humanity Foundation</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Type</span>
+                    <span class="value">Colorado Nonprofit Corporation</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Entity ID</span>
+                    <span class="value">20261595655</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Date of Formation</span>
+                    <span class="value">May 19, 2026</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Tax Status</span>
+                    <span class="value">501(c)(3) Pending</span>
+                </div>
+            </div>
+            <div class="transparency-card">
+                <h4>Governance</h4>
+                <div class="info-row">
+                    <span class="label">Registered Address</span>
+                    <span class="value">1099 18th St Ste 3000<br>Denver, CO 80202</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Governing Law</span>
+                    <span class="value">Colorado Revised Statutes<br>Title 7, Article 122</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Financial Year</span>
+                    <span class="value">January &ndash; December</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Annual Report</span>
+                    <span class="value">Filed annually with<br>Colorado SOS &amp; IRS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<section id="contact">
+    <div class="container">
+        <div class="section-label reveal">Get In Touch</div>
+        <h2 class="section-title reveal">Contact</h2>
+        <p class="section-subtitle reveal">For inquiries, partnerships, or to contribute to our mission.</p>
+
+        <div class="contact-grid reveal">
+            <a href="mailto:contact@appliedhumanityfoundation.org" class="contact-card">
+                <div class="contact-icon c-email">&#9993;</div>
+                <div>
+                    <h4>Email</h4>
+                    <span>contact@appliedhumanity<wbr>foundation.org</span>
+                </div>
+            </a>
+            <a href="https://github.com/applied-humanity-foundation" class="contact-card" target="_blank" rel="noopener">
+                <div class="contact-icon c-github">&#9672;</div>
+                <div>
+                    <h4>GitHub</h4>
+                    <span>github.com/applied-humanity-foundation</span>
+                </div>
+            </a>
+            <div class="contact-card">
+                <div class="contact-icon c-address">&#9962;</div>
+                <div>
+                    <h4>Registered Office</h4>
+                    <span>1099 18th St Ste 3000, Denver, CO 80202, United States</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p class="footer-brand">Applied Humanity Foundation</p>
+    <p>Colorado Nonprofit Corporation &nbsp;&middot;&nbsp; Advancing human well-being through responsible technology.</p>
+    <div class="footer-links">
+        <a href="#mission">Mission</a>
+        <a href="#programs">Programs</a>
+        <a href="#projects">Open Source</a>
+        <a href="#transparency">Transparency</a>
+        <a href="mailto:contact@appliedhumanityfoundation.org">Contact</a>
+    </div>
+    <p style="margin-top:20px;">&copy; 2026 Applied Humanity Foundation. Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--accent-2);text-decoration:none;" target="_blank" rel="noopener">CC BY 4.0</a>. Code licensed under <a href="https://opensource.org/licenses/MIT" style="color:var(--accent-2);text-decoration:none;" target="_blank" rel="noopener">MIT</a>.</p>
+</footer>
+
+<script>
+    // Particle background
+    (function() {
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let w, h, pts = [];
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', () => { resize(); init(); });
+
+        function init() {
+            const count = Math.min(Math.floor((w * h) / 14000), 90);
+            pts = [];
+            for (let i = 0; i < count; i++) {
+                pts.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 1.6 + 0.4,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    o: Math.random() * 0.45 + 0.15
+                });
+            }
+        }
+        init();
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            for (const p of pts) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(14,165,233,${p.o})`;
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) p.x = w;
+                if (p.x > w) p.x = 0;
+                if (p.y < 0) p.y = h;
+                if (p.y > h) p.y = 0;
+            }
+            for (let i = 0; i < pts.length; i++) {
+                for (let j = i + 1; j < pts.length; j++) {
+                    const dx = pts[i].x - pts[j].x;
+                    const dy = pts[i].y - pts[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(pts[i].x, pts[i].y);
+                        ctx.lineTo(pts[j].x, pts[j].y);
+                        ctx.strokeStyle = `rgba(14,165,233,${0.05 * (1 - dist / 130)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Mobile menu
+    document.getElementById('mobileToggle').addEventListener('click', () => {
+        document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(a => {
+        a.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('open');
+        });
+    });
+
+    // Scroll reveal
+    (function() {
+        const observer = new IntersectionObserver((entries) => {
+            for (const e of entries) {
+                if (e.isIntersecting) e.target.classList.add('visible');
+            }
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        setTimeout(() => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+            });
+        }, 100);
+    })();
+
+    // Counter animation
+    (function() {
+        const seen = new Set();
+        const obs = new IntersectionObserver((entries) => {
+            for (const e of entries) {
+                if (e.isIntersecting && !seen.has(e.target)) {
+                    seen.add(e.target);
+                    const el = e.target;
+                    const target = parseInt(el.dataset.count, 10);
+                    const suffix = el.dataset.suffix || '';
+                    const raw = el.dataset.raw === 'true';
+                    if (raw) { el.textContent = target; return; }
+                    const dur = 1400;
+                    const start = performance.now();
+                    function tick(now) {
+                        const p = Math.min((now - start) / dur, 1);
+                        const eased = 1 - Math.pow(1 - p, 3);
+                        el.textContent = Math.floor(target * eased) + suffix;
+                        if (p < 1) requestAnimationFrame(tick);
+                        else el.textContent = target + suffix;
+                    }
+                    requestAnimationFrame(tick);
+                }
+            }
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
+    })();
+</script>
+
+</body>
+</html>
