@@ -472,6 +472,8 @@
         .contact-icon.c-email { background: rgba(14,165,233,0.12); }
         .contact-icon.c-github { background: rgba(6,214,160,0.12); }
         .contact-icon.c-address { background: rgba(245,158,11,0.12); }
+        .contact-icon.c-x { background: rgba(148,163,184,0.14); }
+        .contact-icon.c-bluesky { background: rgba(17,133,254,0.14); }
         .contact-card h4 { font-size: 0.95rem; margin-bottom: 4px; }
         .contact-card span { color: var(--text-muted); font-size: 0.85rem; word-break: break-all; }
 
@@ -505,6 +507,28 @@
             transition: color 0.2s;
         }
         footer .footer-links a:hover { color: var(--accent-2); }
+        footer .footer-social {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+        }
+        footer .footer-social a {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: color 0.2s, border-color 0.2s, transform 0.2s;
+        }
+        footer .footer-social a:hover {
+            color: var(--text);
+            border-color: var(--accent-2);
+            transform: translateY(-2px);
+        }
+        footer .footer-social svg { width: 18px; height: 18px; fill: currentColor; }
 
         /* ---- Divider ---- */
         .section-divider {
@@ -851,6 +875,20 @@
                     <span>github.com/applied-humanity-foundation</span>
                 </div>
             </a>
+            <a href="https://x.com/AppliedHumanity" class="contact-card" target="_blank" rel="noopener">
+                <div class="contact-icon c-x"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+                <div>
+                    <h4>X (Twitter)</h4>
+                    <span>@AppliedHumanity</span>
+                </div>
+            </a>
+            <a href="https://bsky.app/profile/appliedhumanityfoundation.org" class="contact-card" target="_blank" rel="noopener">
+                <div class="contact-icon c-bluesky"><svg viewBox="0 0 568 501" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.193 95.759-152.32 160.879-201.21C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.89-129.52 80.986-149.071-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.66 0 75.293 0 57.947 0-28.906 76.135-1.611 123.121 33.664Z"/></svg></div>
+                <div>
+                    <h4>Bluesky</h4>
+                    <span>@appliedhumanityfoundation.org</span>
+                </div>
+            </a>
             <div class="contact-card">
                 <div class="contact-icon c-address">&#9962;</div>
                 <div>
@@ -871,6 +909,11 @@
         <a href="#projects">Open Source</a>
         <a href="#transparency">Transparency</a>
         <a href="mailto:contact@appliedhumanityfoundation.org">Contact</a>
+    </div>
+    <div class="footer-social">
+        <a href="https://x.com/AppliedHumanity" target="_blank" rel="noopener" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+        <a href="https://bsky.app/profile/appliedhumanityfoundation.org" target="_blank" rel="noopener" aria-label="Bluesky"><svg viewBox="0 0 568 501" aria-hidden="true"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.193 95.759-152.32 160.879-201.21C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.89-129.52 80.986-149.071-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.66 0 75.293 0 57.947 0-28.906 76.135-1.611 123.121 33.664Z"/></svg></a>
+        <a href="https://github.com/applied-humanity-foundation" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
     </div>
     <p style="margin-top:20px;">&copy; 2026 Applied Humanity Foundation. Content licensed under <a href="https://creativecommons.org/licenses/by/4.0/" style="color:var(--accent-2);text-decoration:none;" target="_blank" rel="noopener">CC BY 4.0</a>. Code licensed under <a href="https://opensource.org/licenses/MIT" style="color:var(--accent-2);text-decoration:none;" target="_blank" rel="noopener">MIT</a>.</p>
 </footer>
