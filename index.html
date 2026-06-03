@@ -368,29 +368,70 @@
         .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; }
         .card .card-tag { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
 
-        /* ============ PROJECTS ============ */
-        .projects { margin-top: 50px; display: flex; flex-direction: column; gap: 12px; }
-        .project-item {
+        /* ============ PROJECTS (carousel) ============ */
+        .carousel { position: relative; margin-top: 50px; }
+        .projects {
+            display: flex; gap: 20px;
+            overflow-x: auto; scroll-snap-type: x proximity;
+            padding: 14px 6px 36px;
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .projects::-webkit-scrollbar { display: none; }
+        .project-card {
+            position: relative; flex: 0 0 auto;
+            width: clamp(272px, 78vw, 360px);
+            scroll-snap-align: start;
             background: var(--card-bg); border: 1px solid var(--card-border);
-            border-radius: var(--radius); padding: 26px 30px;
-            display: grid; grid-template-columns: auto 1fr auto; gap: 22px; align-items: center;
+            border-radius: var(--radius); padding: 30px 28px 28px;
+            display: flex; flex-direction: column;
             box-shadow: var(--card-shadow);
             text-decoration: none; color: var(--text);
-            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s;
         }
-        .project-item:hover { transform: translateX(6px); border-color: var(--accent); box-shadow: 0 18px 44px rgba(22,38,64,0.1); }
-        .project-index { font-family: var(--mono); font-size: 0.85rem; font-weight: 600; color: var(--accent); opacity: 0.8; align-self: flex-start; padding-top: 4px; }
-        .project-item h3 { font-size: 1.12rem; margin-bottom: 6px; letter-spacing: -0.3px; }
-        .project-item:hover h3 { color: var(--accent); }
-        .project-item p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 12px; }
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: var(--card-accent, var(--accent)); opacity: 0.85;
+        }
+        .project-card:hover { transform: translateY(-6px); border-color: var(--card-accent, var(--accent)); box-shadow: 0 22px 52px rgba(22,38,64,0.13); }
+        .project-card.is-active { border-color: var(--card-accent, var(--accent)); box-shadow: 0 22px 52px rgba(22,38,64,0.14); }
+        .project-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+        .project-index { font-family: var(--mono); font-size: 0.82rem; font-weight: 600; color: var(--card-accent, var(--accent)); opacity: 0.85; }
+        .project-card h3 { font-size: 1.16rem; margin-bottom: 9px; letter-spacing: -0.3px; }
+        .project-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 18px; flex: 1; }
         .project-tags { display: flex; gap: 8px; flex-wrap: wrap; }
         .tag { font-family: var(--mono); font-size: 0.72rem; padding: 4px 11px; border-radius: 7px; font-weight: 500; letter-spacing: 0.02em; }
         .tag.blue { background: rgba(14,165,233,0.12); color: #0284c7; }
         .tag.green { background: rgba(6,214,160,0.14); color: #0d9488; }
         .tag.amber { background: rgba(245,158,11,0.16); color: #b45309; }
         .tag.indigo { background: rgba(99,102,241,0.14); color: #4f46e5; }
-        .project-arrow { font-size: 1.4rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
-        .project-item:hover .project-arrow { color: var(--accent); transform: translateX(5px); }
+        .project-arrow { font-size: 1.35rem; color: var(--text-muted); transition: transform 0.3s, color 0.3s; }
+        .project-card:hover .project-arrow, .project-card.is-active .project-arrow { color: var(--card-accent, var(--accent)); transform: translateX(4px); }
+        .carousel-btn {
+            position: absolute; top: 46%; transform: translateY(-50%);
+            width: 46px; height: 46px; border-radius: 50%;
+            border: 1px solid var(--border); background: var(--surface);
+            color: var(--text); font-size: 1.4rem; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 3;
+            box-shadow: 0 10px 28px rgba(22,38,64,0.12);
+            transition: transform 0.25s, border-color 0.25s, color 0.25s, opacity 0.25s;
+        }
+        .carousel-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-50%) scale(1.06); }
+        .carousel-btn.prev { left: -12px; }
+        .carousel-btn.next { right: -12px; }
+        .carousel-btn:disabled { opacity: 0; pointer-events: none; }
+        .carousel-dots { display: flex; justify-content: center; gap: 9px; margin-top: 6px; }
+        .carousel-dots button { width: 9px; height: 9px; padding: 0; border: none; border-radius: 50px; background: var(--border); cursor: pointer; transition: width 0.3s, background 0.3s; }
+        .carousel-dots button.active { width: 26px; background: var(--accent); }
+        .proj-aura {
+            position: absolute; inset: 0; z-index: 0; pointer-events: none;
+            color: transparent;
+            background:
+                radial-gradient(58% 58% at 22% 26%, currentColor, transparent 70%),
+                radial-gradient(54% 54% at 82% 74%, currentColor, transparent 72%);
+            transition: color 0.7s ease;
+        }
 
         /* ============ TEAM ============ */
         .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 50px; }
@@ -563,8 +604,8 @@
             .mobile-toggle { display: block; }
             .section { padding: 80px 0; }
             .involve { padding: 44px 26px; }
-            .project-item { grid-template-columns: auto 1fr; }
-            .project-arrow { display: none; }
+            .carousel-btn { display: none; }
+            .project-card { width: clamp(260px, 84vw, 340px); }
             .info-row { flex-direction: column; gap: 3px; }
             .info-row .value { text-align: left; }
         }
@@ -705,15 +746,20 @@
     <!-- PROJECTS -->
     <section class="section" id="projects">
         <div class="grid-texture"></div>
+        <div class="proj-aura" id="projAura"></div>
         <div class="wrap">
             <div class="kicker reveal">03 · What We Build</div>
             <h2 class="section-title reveal">Open Source Projects</h2>
             <p class="section-subtitle reveal">All our work is open source. We believe transparency and collaboration produce better technology for everyone.</p>
 
-            <div class="projects reveal">
-                <a class="project-item" href="https://github.com/applied-humanity-foundation/digital-literacy-toolkit" target="_blank" rel="noopener">
-                    <span class="project-index">01</span>
-                    <div>
+            <div class="carousel reveal">
+                <button class="carousel-btn prev" id="projPrev" type="button" aria-label="Previous project">&#8249;</button>
+                <div class="projects" id="projectsTrack">
+                    <a class="project-card" style="--card-accent:#f59e0b" href="https://github.com/applied-humanity-foundation/digital-literacy-toolkit" target="_blank" rel="noopener">
+                        <div class="project-card-top">
+                            <span class="project-index">01</span>
+                            <span class="project-arrow">&rarr;</span>
+                        </div>
                         <h3>Digital Literacy Toolkit</h3>
                         <p>A comprehensive collection of beginner-friendly guides, templates, and interactive tools for practical technology skills — from productivity workflows to AI-assisted content creation.</p>
                         <div class="project-tags">
@@ -721,12 +767,12 @@
                             <span class="tag green">CC BY 4.0</span>
                             <span class="tag amber">multilingual</span>
                         </div>
-                    </div>
-                    <span class="project-arrow">&rarr;</span>
-                </a>
-                <a class="project-item" href="https://github.com/applied-humanity-foundation/ai-application-framework" target="_blank" rel="noopener">
-                    <span class="project-index">02</span>
-                    <div>
+                    </a>
+                    <a class="project-card" style="--card-accent:#2563eb" href="https://github.com/applied-humanity-foundation/ai-application-framework" target="_blank" rel="noopener">
+                        <div class="project-card-top">
+                            <span class="project-index">02</span>
+                            <span class="project-arrow">&rarr;</span>
+                        </div>
                         <h3>AI Application Framework</h3>
                         <p>Open-source tools and libraries that simplify responsible integration of publicly available AI systems into educational and nonprofit applications.</p>
                         <div class="project-tags">
@@ -734,12 +780,12 @@
                             <span class="tag indigo">TypeScript</span>
                             <span class="tag green">MIT</span>
                         </div>
-                    </div>
-                    <span class="project-arrow">&rarr;</span>
-                </a>
-                <a class="project-item" href="https://github.com/applied-humanity-foundation/community-translation-hub" target="_blank" rel="noopener">
-                    <span class="project-index">03</span>
-                    <div>
+                    </a>
+                    <a class="project-card" style="--card-accent:#0d9488" href="https://github.com/applied-humanity-foundation/community-translation-hub" target="_blank" rel="noopener">
+                        <div class="project-card-top">
+                            <span class="project-index">03</span>
+                            <span class="project-arrow">&rarr;</span>
+                        </div>
                         <h3>Community Translation Hub</h3>
                         <p>A collaborative platform for translating technology education materials into multiple languages, starting with English and Chinese.</p>
                         <div class="project-tags">
@@ -747,12 +793,12 @@
                             <span class="tag green">CC BY 4.0</span>
                             <span class="tag blue">community</span>
                         </div>
-                    </div>
-                    <span class="project-arrow">&rarr;</span>
-                </a>
-                <a class="project-item" href="https://github.com/applied-humanity-foundation/quant-graph" target="_blank" rel="noopener">
-                    <span class="project-index">04</span>
-                    <div>
+                    </a>
+                    <a class="project-card" style="--card-accent:#6366f1" href="https://github.com/applied-humanity-foundation/quant-graph" target="_blank" rel="noopener">
+                        <div class="project-card-top">
+                            <span class="project-index">04</span>
+                            <span class="project-arrow">&rarr;</span>
+                        </div>
                         <h3>Quant Graph</h3>
                         <p>Visual node-based quantitative research platform enabling researchers and educators to build, test, and visualize financial models through an intuitive graph interface.</p>
                         <div class="project-tags">
@@ -760,23 +806,24 @@
                             <span class="tag indigo">GPUI</span>
                             <span class="tag green">MIT</span>
                         </div>
-                    </div>
-                    <span class="project-arrow">&rarr;</span>
-                </a>
-                <a class="project-item" href="https://github.com/applied-humanity-foundation/quant-bridge" target="_blank" rel="noopener">
-                    <span class="project-index">05</span>
-                    <div>
+                    </a>
+                    <a class="project-card" style="--card-accent:#0ea5e9" href="https://github.com/applied-humanity-foundation/quant-bridge" target="_blank" rel="noopener">
+                        <div class="project-card-top">
+                            <span class="project-index">05</span>
+                            <span class="project-arrow">&rarr;</span>
+                        </div>
                         <h3>Quant Bridge</h3>
-                        <p>Unified multi-market trading research API providing standardized data access across financial markets for academic research and educational purposes.</p>
+                        <p>Read-only multi-market data API providing standardized access to public quotes, candlesticks, and order-book data for academic research and education.</p>
                         <div class="project-tags">
                             <span class="tag blue">Rust</span>
                             <span class="tag indigo">Python</span>
                             <span class="tag green">MIT</span>
                         </div>
-                    </div>
-                    <span class="project-arrow">&rarr;</span>
-                </a>
+                    </a>
+                </div>
+                <button class="carousel-btn next" id="projNext" type="button" aria-label="Next project">&#8250;</button>
             </div>
+            <div class="carousel-dots" id="projDots"></div>
         </div>
     </section>
 
@@ -1070,6 +1117,97 @@
             }
         }, { threshold: 0.5 });
         document.querySelectorAll('[data-count]').forEach(el => obs.observe(el));
+    })();
+
+    // ---- Projects carousel ----
+    (function() {
+        const track = document.getElementById('projectsTrack');
+        if (!track) return;
+        const cards = Array.from(track.querySelectorAll('.project-card'));
+        if (!cards.length) return;
+        const prev = document.getElementById('projPrev');
+        const next = document.getElementById('projNext');
+        const dotsWrap = document.getElementById('projDots');
+        const aura = document.getElementById('projAura');
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const behavior = reduce ? 'auto' : 'smooth';
+        const GAP = 20;
+        let current = -1;
+
+        function hexToRgba(hex, a) {
+            const h = (hex || '').trim().replace('#', '');
+            if (h.length !== 6) return 'transparent';
+            const r = parseInt(h.slice(0, 2), 16),
+                  g = parseInt(h.slice(2, 4), 16),
+                  b = parseInt(h.slice(4, 6), 16);
+            return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
+        }
+        const accentOf = (card) => card.style.getPropertyValue('--card-accent');
+        const stride = () => cards[0].getBoundingClientRect().width + GAP;
+
+        const dots = cards.map((_, i) => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.setAttribute('aria-label', 'Go to project ' + (i + 1));
+            b.addEventListener('click', () => {
+                const tr = track.getBoundingClientRect();
+                const cr = cards[i].getBoundingClientRect();
+                track.scrollTo({ left: track.scrollLeft + (cr.left - tr.left), behavior });
+            });
+            dotsWrap.appendChild(b);
+            return b;
+        });
+
+        function update() {
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            const atStart = track.scrollLeft <= 1;
+            const atEnd = track.scrollLeft >= maxScroll - 1;
+            if (prev) prev.disabled = atStart;
+            if (next) next.disabled = atEnd;
+
+            let active = 0;
+            if (atEnd) {
+                active = cards.length - 1;
+            } else {
+                const tr = track.getBoundingClientRect();
+                let bestDist = Infinity;
+                cards.forEach((c, idx) => {
+                    const dist = Math.abs(c.getBoundingClientRect().left - tr.left);
+                    if (dist < bestDist) { bestDist = dist; active = idx; }
+                });
+            }
+            if (active === current) return;
+            current = active;
+            cards.forEach((c, idx) => c.classList.toggle('is-active', idx === active));
+            dots.forEach((d, idx) => d.classList.toggle('active', idx === active));
+            if (aura) aura.style.color = hexToRgba(accentOf(cards[active]), 0.16);
+        }
+
+        let raf = 0;
+        track.addEventListener('scroll', () => {
+            if (raf) return;
+            raf = requestAnimationFrame(() => { raf = 0; update(); });
+        }, { passive: true });
+
+        // Vertical mouse wheel scrolls the carousel horizontally; release at the edges so the page can still scroll.
+        track.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            if (maxScroll <= 0) return;
+            if ((e.deltaY < 0 && track.scrollLeft <= 0) ||
+                (e.deltaY > 0 && track.scrollLeft >= maxScroll - 0.5)) return;
+            let dy = e.deltaY;
+            if (e.deltaMode === 1) dy *= 16;
+            else if (e.deltaMode === 2) dy *= track.clientWidth;
+            e.preventDefault();
+            track.scrollLeft += dy;
+        }, { passive: false });
+
+        if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -stride(), behavior }));
+        if (next) next.addEventListener('click', () => track.scrollBy({ left: stride(), behavior }));
+        window.addEventListener('resize', update);
+
+        update();
     })();
 </script>
 
