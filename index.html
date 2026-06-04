@@ -368,6 +368,9 @@
         .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.65; }
         .card .card-tag { display: inline-block; margin-top: 16px; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.05em; }
 
+        /* ============ WHO WE SERVE ============ */
+        .serve-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr)); gap: 16px; margin-top: 50px; }
+
         /* ============ PROJECTS (carousel) ============ */
         .carousel { position: relative; margin-top: 50px; }
         .projects {
@@ -443,10 +446,10 @@
         }
         .team-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 22px 50px rgba(22,38,64,0.12); }
         .team-avatar {
-            width: 78px; height: 78px; border-radius: 50%; margin: 0 auto 18px;
+            width: 82px; height: 82px; border-radius: 50%; margin: 0 auto 18px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; font-weight: 800; font-family: var(--mono); color: white;
-            box-shadow: 0 8px 24px rgba(22,38,64,0.15);
+            font-size: 1.6rem; font-weight: 700; color: white;
+            box-shadow: 0 10px 26px rgba(22,38,64,0.16), inset 0 0 0 4px rgba(255,255,255,0.18);
         }
         .av1 { background: linear-gradient(135deg, var(--teal), var(--sky)); }
         .av2 { background: linear-gradient(135deg, var(--sky), var(--teal-bright)); }
@@ -632,6 +635,7 @@
     <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">&#9776;</button>
     <ul class="nav-links" id="navLinks">
         <li><a href="#mission">Mission</a></li>
+        <li><a href="#who-we-serve">Who We Serve</a></li>
         <li><a href="#programs">Programs</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#team">Team</a></li>
@@ -706,11 +710,44 @@
         </div>
     </section>
 
+    <!-- WHO WE SERVE -->
+    <section class="section" id="who-we-serve">
+        <div class="grid-texture"></div>
+        <div class="wrap">
+            <div class="kicker reveal">02 · Who It's For</div>
+            <h2 class="section-title reveal">Who We Serve</h2>
+            <p class="section-subtitle reveal">Technology should serve people first. Everything we build is designed for &mdash; and freely available to &mdash; the people too often left out.</p>
+
+            <div class="serve-grid reveal">
+                <div class="card">
+                    <div class="card-icon blue">&#128218;</div>
+                    <h3>Learners &amp; Curious Beginners</h3>
+                    <p>People teaching themselves modern technology &mdash; whatever their degree, budget, or background. We keep our guides practical, jargon-free, and free to use.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon green">&#127979;</div>
+                    <h3>Educators &amp; Schools</h3>
+                    <p>Teachers and trainers who need quality material they can adapt. Everything we publish is openly licensed (CC BY 4.0), so it's yours to localize and reuse.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon amber">&#129309;</div>
+                    <h3>Nonprofits &amp; Community Groups</h3>
+                    <p>Mission-driven organizations that need capable tools but can't afford enterprise software. We build open, public-interest alternatives &mdash; free by default.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon indigo">&#127757;</div>
+                    <h3>Non-English Speakers &amp; Underserved Communities</h3>
+                    <p>People left out by language and cost barriers. Through our Community Translation Hub, we work to make learning available well beyond English.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PROGRAMS -->
     <section class="section alt" id="programs">
         <div class="grid-texture"></div>
         <div class="wrap">
-            <div class="kicker reveal">02 · What We Do</div>
+            <div class="kicker reveal">03 · What We Do</div>
             <h2 class="section-title reveal">Programs</h2>
             <p class="section-subtitle reveal">Focused initiatives that connect advanced technology with the people it should serve.</p>
 
@@ -748,7 +785,7 @@
         <div class="grid-texture"></div>
         <div class="proj-aura" id="projAura"></div>
         <div class="wrap">
-            <div class="kicker reveal">03 · What We Build</div>
+            <div class="kicker reveal">04 · What We Build</div>
             <h2 class="section-title reveal">Open Source Projects</h2>
             <p class="section-subtitle reveal">All our work is open source. We believe transparency and collaboration produce better technology for everyone.</p>
 
@@ -831,9 +868,9 @@
     <section class="section alt" id="team">
         <div class="grid-texture"></div>
         <div class="wrap">
-            <div class="kicker reveal">04 · Who We Are</div>
+            <div class="kicker reveal">05 · Who We Are</div>
             <h2 class="section-title reveal">Leadership</h2>
-            <p class="section-subtitle reveal">Our team brings deep experience in software engineering, creative technology, and education.</p>
+            <p class="section-subtitle reveal">A small team building and teaching in the open &mdash; supported by a growing community of contributors and volunteers around the world.</p>
 
             <div class="team-grid reveal">
                 <div class="team-card">
@@ -846,31 +883,13 @@
                     <div class="team-avatar av2">EM</div>
                     <h3>Elena Marchetti</h3>
                     <p class="team-role">Director of Education</p>
-                    <p class="bio">Education technology specialist with a background in curriculum design and digital pedagogy. Previously led online learning initiatives at an EdTech startup in Berlin. Passionate about making technology education accessible across languages and cultures.</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar av3">DR</div>
-                    <h3>David Reeves</h3>
-                    <p class="team-role">Director of Technology</p>
-                    <p class="bio">Full-stack developer and open-source contributor with experience in AI application development and cloud infrastructure. Previously at a Bay Area SaaS company building developer tools. Advocates for ethical AI deployment and public-interest software.</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar av4">SK</div>
-                    <h3>Sarah Kim</h3>
-                    <p class="team-role">Director of Operations</p>
-                    <p class="bio">Nonprofit operations and compliance professional with experience managing 501(c)(3) organizations. Background in grant writing, financial reporting, and organizational governance. Ensures the foundation operates with full transparency and accountability.</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-avatar av5">MA</div>
-                    <h3>Marcus Andersen</h3>
-                    <p class="team-role">Director of Research</p>
-                    <p class="bio">AI researcher with a focus on human-computer interaction and responsible deployment of machine learning systems. Former research engineer at a Nordic AI lab. Leads the foundation's research initiatives on accessibility and ethical technology design.</p>
+                    <p class="bio">AI-education specialist with 4 years of experience helping nonprofits and individuals adopt and make practical use of artificial intelligence. Her work focuses on lowering the barrier to entry &mdash; turning capable but intimidating AI tools into approachable, everyday skills for the organizations and people most often left out of the technology shift.</p>
                 </div>
                 <div class="team-card">
                     <div class="team-avatar av6">LP</div>
                     <h3>Lucia Pereira</h3>
                     <p class="team-role">Director of Community</p>
-                    <p class="bio">Community strategist and multilingual content creator with experience building global developer communities. Previously managed open-source outreach programs at a major cloud platform. Drives the foundation's workshops and translation initiatives.</p>
+                    <p class="bio">Cloud-native engineer with 7 years of experience across Google Cloud and Amazon Web Services, designing and operating scalable, production-grade infrastructure. She brings that enterprise engineering background to the foundation's open-source projects and the developers who build on them &mdash; making sure what we ship is reliable, secure, and accessible to the communities that depend on it.</p>
                 </div>
             </div>
         </div>
@@ -880,7 +899,7 @@
     <section class="section" id="transparency">
         <div class="grid-texture"></div>
         <div class="wrap">
-            <div class="kicker reveal">05 · Accountability</div>
+            <div class="kicker reveal">06 · Accountability</div>
             <h2 class="section-title reveal">Transparency</h2>
             <p class="section-subtitle reveal">We believe nonprofits should operate with full transparency. Here is our organizational information.</p>
 
@@ -910,7 +929,7 @@
             <div class="involve reveal">
                 <div class="involve-grid-tex"></div>
                 <div class="involve-inner">
-                    <div class="kicker">06 · Join Us</div>
+                    <div class="kicker">07 · Join Us</div>
                     <h2>Get Involved</h2>
                     <p class="sub">We are a small team with a big mission. Whether you write code, speak another language, or want to partner — there is a place for you here.</p>
                     <div class="involve-cards">
@@ -942,7 +961,7 @@
     <section class="section alt" id="contact">
         <div class="grid-texture"></div>
         <div class="wrap">
-            <div class="kicker reveal">07 · Get In Touch</div>
+            <div class="kicker reveal">08 · Get In Touch</div>
             <h2 class="section-title reveal">Contact</h2>
             <p class="section-subtitle reveal">For inquiries, partnerships, or to contribute to our mission.</p>
 
